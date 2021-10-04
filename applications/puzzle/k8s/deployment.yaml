@@ -1,13 +1,10 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: puzzle
   labels:
     app: puzzle
 spec:
-  selector:
-    matchLabels:
-      app: puzzle
   strategy:
     type: Recreate
   template:
@@ -47,16 +44,13 @@ spec:
     tier: puzzle
   type: NodePort
 ---
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: mongo
   labels:
     app: mongo
 spec:
-  selector:
-    matchLabels:
-      app: mongo
   strategy:
     type: Recreate
   template:
@@ -88,7 +82,7 @@ spec:
     tier: mongo
   type: NodePort
 ---
-apiVersion: networking.k8s.io/v1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
  name: puzzle
