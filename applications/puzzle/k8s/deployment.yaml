@@ -1,10 +1,14 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: puzzle
   labels:
     app: puzzle
 spec:
+  selector:
+    matchLabels:
+      app: puzzle
+      tier: puzzle
   strategy:
     type: Recreate
   template:
@@ -44,13 +48,17 @@ spec:
     tier: puzzle
   type: NodePort
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo
   labels:
     app: mongo
 spec:
+  selector:
+    matchLabels:
+      app: mongo
+      tier: mongo
   strategy:
     type: Recreate
   template:
@@ -82,7 +90,7 @@ spec:
     tier: mongo
   type: NodePort
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
  name: puzzle
@@ -91,7 +99,7 @@ spec:
     serviceName: puzzle
     servicePort: 3000
   rules:
-  - host: puzzle.192.168.99.100.xip.io
+  - host: puzzle.10.168.0.6.xip.io
     http:
       paths:
       - path: /
