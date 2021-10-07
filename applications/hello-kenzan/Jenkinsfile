@@ -11,6 +11,14 @@ node {
     registryHost = "192.168.1.62:30400/"
     imageName = "${registryHost}${appName}:${tag}"
     env.BUILDIMG=imageName
+    
+    stage "Build"
+    
+        sh "docker build -t ${imageName} applications/hello-kenzan"
+    
+    stage "Push"
+
+        sh "docker push ${imageName}"
 
     stage "Deploy"
 
