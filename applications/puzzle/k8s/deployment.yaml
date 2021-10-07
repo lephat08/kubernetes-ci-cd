@@ -17,7 +17,7 @@ spec:
         tier: puzzle
     spec:
       containers:
-      - image: 192.168.1.62:30400/puzzle:"$BUILD_TAG"
+      - image: 192.168.1.62:30400/puzzle:4ae6896
         name: puzzle
         imagePullPolicy: Always
         lifecycle:
