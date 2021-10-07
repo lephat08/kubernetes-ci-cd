@@ -1,10 +1,13 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: puzzle
   labels:
     app: puzzle
 spec:
+  selector:
+    matchLabels:
+      app: puzzle    
   strategy:
     type: Recreate
   template:
@@ -14,7 +17,7 @@ spec:
         tier: puzzle
     spec:
       containers:
-      - image: 127.0.0.1:30400/puzzle:$BUILD_TAG
+      - image: 192.168.1.62:30400/puzzle:"$BUILD_TAG"
         name: puzzle
         imagePullPolicy: Always
         lifecycle:
@@ -44,13 +47,17 @@ spec:
     tier: puzzle
   type: NodePort
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo
   labels:
     app: mongo
 spec:
+  selector:
+    matchLabels:
+      app: mongo
+      tier: mongo
   strategy:
     type: Recreate
   template:
@@ -82,13 +89,13 @@ spec:
     tier: mongo
   type: NodePort
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
  name: puzzle
 spec:
   rules:
-  - host: puzzle.10.168.0.6.xip.io
+  - host: puzzle.192.168.1.62.xip.io
     http:
       paths:
       - path: /
