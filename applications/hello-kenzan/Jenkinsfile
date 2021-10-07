@@ -16,6 +16,10 @@ node {
     
         sh "docker build -t ${imageName} applications/hello-kenzan"
     
+    stage "Change Tag"
+        
+        sh "docker tag ${appName}:latest ${imageName}"
+    
     stage "Push"
 
         sh "docker push ${imageName}"
