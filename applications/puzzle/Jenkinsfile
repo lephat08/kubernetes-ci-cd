@@ -27,13 +27,6 @@ node {
 
         sh "docker push ${imageNamev1}"
   
-    stage "Delete pod"
-        
-        sh "kubectl delete service puzzle"
-        sh "kubectl delete deploy puzzle"
-        sh "kubectl delete service mongo"
-        sh "kubectl delete deploy mongo"
-        sh "delete ingress.networking.k8s.io puzzle"
 
     stage "Deploy"
         
